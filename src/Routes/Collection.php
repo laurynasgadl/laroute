@@ -5,6 +5,7 @@ namespace Jojo\Laroute\Routes;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\RouteCollection;
 use Jojo\Laroute\Routes\Exceptions\ZeroRoutesException;
+use Illuminate\Support\Arr;
 
 class Collection extends \Illuminate\Support\Collection
 {
@@ -65,7 +66,7 @@ class Collection extends \Illuminate\Support\Collection
         $methods = $route->methods();
         $uri     = $route->uri();
         $name    = $route->getName();
-        $laroute = array_get($route->getAction(), 'laroute', null);
+        $laroute = Arr::get($route->getAction(), 'laroute', null);
 
         switch ($filter) {
             case 'all':
@@ -79,4 +80,11 @@ class Collection extends \Illuminate\Support\Collection
         return compact('host', 'methods', 'uri', 'name');
     }
 
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->items;
+    }
 }
